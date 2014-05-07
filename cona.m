@@ -4,7 +4,7 @@ function [con_neq,con_eq]=cona(xx,n,V0)
 % V0 - wartosc oczekiwana zaklocenia
 s=size(xx);
 m=s(1)-n;
-xn=xx(1:n); % wyodrêbnienie stanu
-u=xx(n+1:n+m); % wyodrêbnienie sterowania
-con_neq=[]; % nie mamy ograniczeñ nierównoœciowych
+xn=xx(1:n); % wyodrebnienie stanu
+u=xx(n+1:n+m); % wyodrebnienie sterowania
+con_neq=[]; % nie mamy ograniczen nierownosciowych
 con_eq=transf(xn,u,V0,n,m)-xn;
