@@ -25,14 +25,29 @@ disp(transf(xx(1:n),xx(n+1:n+m),w0,n,m) - xs);
 % Oblicza model liniowy
 [A,B,C,G,R,r,Q,q,H] = model_lin(xs,us, w0);
 
+
 % Podstawienie, by wskaznik zawiera³ tylko R i Q
 [D,ud,xd,An,Bn,Cn,Gn,Qn,Rn] = model_lin_now(A,B,C,G,R,r,Q,q,H,n);
+
+disp(An);
+disp('-----');
+disp(Bn);
+disp('-----');
+disp(Cn);
+disp('-----');
+disp(Qn);
+disp('-----');
+disp(Rn);
+disp('-----');
+disp([Qn-n*R^(-1)*n']);
+disp('-----');
+disp(Gn);
 
 % Optymalne sterowanie
 [S, T] = ster_opt(An, Bn, Cn, Qn, Rn, n);
 
 %symulacja - ustalony stan pocz¹tkowy
-xa = [5.8;-2];
+xa = [-5.5;-0.1909];
 amp = 0.0025;
 
 ua = [];
@@ -91,11 +106,11 @@ else
 end
 q = [0.2*g^2*xs(1); xs(2)];
 
-A = [1.8, 0; 0.3*(1.7 - us(1)),0.2];  % wspolczynniki przy xs
-B = [0; 0.3*xs(1)];         % wspolczynniki przy us 
-G = [1; 0]; %wspolczynniki przy vs
+A = [1.8, 0; 0.3*(1.7 - us(1)),0.2];  % przy xs
+B = [0; 0.3*xs(1)];         % przy us 
+G = [1; 0]; %przy vs
 
-R = [0.1];
+R = [0.05];
 Q = [0.5*0.2*g^2 , 0 ; 0 , 0.5];
 H = [0, 0];
 
@@ -109,11 +124,10 @@ D = -0.5*inv(R)*H;
 xd = inv(2*Q - 0.5*H'*inv(R)*H)*(0.5*H'*inv(R)*r - q);
 ud = - 0.5*inv(R)*(r + H*xd);
 
-inwersja = inv(eye(n) - B*D);
-An = inwersja*A;
-Bn = inwersja*B;
-Gn = inwersja*G;
-Cn = inwersja*(C - xd + A*xd + B*ud);
+An = inv(eye(n) - B*D)*A;
+Bn = inv(eye(n) - B*D)*B;
+Gn = inv(eye(n) - B*D)*G;
+Cn = inv(eye(n) - B*D)*(C - xd + A*xd + B*ud);
 
 Qn = D'*R*D + Q + D'*H;
 Rn = R;
