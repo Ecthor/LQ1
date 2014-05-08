@@ -3,10 +3,10 @@ function [jk]=wskjak(xn,u,n,m)
 % u - sterowanie u[k]
 % n - rozmiar wektora stanu
 % m - rozmiar wektora sterowania
-if u < 0.4
+if u(1) < 0.4
     g=0.4;
-elseif u < 1
-    g=u;
+elseif u(1) < 1
+    g=u(1);
 else
     g=1;
 end
