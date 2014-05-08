@@ -5,7 +5,7 @@ n = 2; %rozmiar wektora stanu
 m = 1; %rozmiar wektora sterowania
 w0 = [0.1]; %wektor zaklocen
 
-xx0 = [1;1;1]; %pkt poczatkowy optymalizacji
+xx0 = [1;2;3]; %pkt poczatkowy optymalizacji
 xx=fmincon(@(x)fun1(x,n,w0),xx0,[],[],[],[],[],[],@(x)cona(x,n,w0));
 
 
@@ -15,40 +15,29 @@ us = xx((n+1):(n+m));
 
 disp('Fmincon:');
 disp(xx);
-%   x1= -5.5000
-%   x2= -0.1909
-%   u= 3.9377
+%   x1= -5.5489
+%   x2= -0.1905
+%   u=  3.9121
 
 disp('Sprawdzenie:')
 disp(transf(xx(1:n),xx(n+1:n+m),w0,n,m) - xs);
 
 % Oblicza model liniowy
-[A,B,C,G,R,r,Q,q,H] = model_lin(xs,us, w0);
+[A,B,C,G,R,r,Q,q,H] = model_lin(xs,us, w0)
 
 
 % Podstawienie, by wskaznik zawiera³ tylko R i Q
 [D,ud,xd,An,Bn,Cn,Gn,Qn,Rn] = model_lin_now(A,B,C,G,R,r,Q,q,H,n);
 
-disp(An);
-disp('-----');
-disp(Bn);
-disp('-----');
-disp(Cn);
-disp('-----');
-disp(Qn);
-disp('-----');
-disp(Rn);
-disp('-----');
-disp([Qn-n*R^(-1)*n']);
-disp('-----');
-disp(Gn);
 
 % Optymalne sterowanie
 [S, T] = ster_opt(An, Bn, Cn, Qn, Rn, n);
 
 %symulacja - ustalony stan pocz¹tkowy
-xa = [-5.5;-0.1909];
-amp = 0.0025;
+xa = [xx(1);xx(2)];
+%xa = [-5.5469; -0.5196]
+%xa = [-5.5479;-0.3]
+amp = 0;
 
 ua = [];
 J = [];
@@ -95,7 +84,6 @@ end
 function [A,B,C,G,R,r,Q,q,H] = model_lin(xs,us,ws)
 
 C = [0;0];
-r = 0.1*us(1);
 
 if us(1) < 0.4
     g=0.4;
@@ -104,14 +92,15 @@ elseif us(1) < 1
 else
     g=1;
 end
-q = [0.2*g^2*xs(1); xs(2)];
+q = [0.2*g^2*xs(1); 2*xs(2)];
 
-A = [1.8, 0; 0.3*(1.7 - us(1)),0.2];  % przy xs
-B = [0; 0.3*xs(1)];         % przy us 
+A = [1.8, 0; 0.3*(1 - us(1)),0.2];  % przy xs
+B = [0.01; -0.3*xs(1)];         % przy us 
 G = [1; 0]; %przy vs
 
-R = [0.05];
-Q = [0.5*0.2*g^2 , 0 ; 0 , 0.5];
+r = 0.2 * us(1);
+R = [0.5*0.2];
+Q = [0.5*0.2*g^2 , 0 ; 0 , 1];
 H = [0, 0];
 
 end
