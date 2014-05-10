@@ -70,15 +70,33 @@ g(z)=
 \section{Założenia projektowe}
 Początkowo wyznaczamy punkt optymalny zadania liniowego za pomocą funkcji fmincon Matlaba. Następnie dokonujemy obliczenia sterowań i stanów dla nowego modelu liniowego i uruchamiamy symulację, mającą na celu sprawdzenie poprawnosci (zbieżnosci do punktu stacjonarnego) rozwiązania zadania.
 
-\section{Funkcja główna}
+\section{Funkcje}
+\subsection{Funkcja główna}
 Wszystkie główne zadania realizuje funkcja lq1.m
-\subsection{Funkcja w matlabie}
+\subsubsection{Funkcja w matlabie}
 Z uwagi na długość funkcji, została ona załączona w oddzielnym pliku.
 
-\subsection{Opis}
+\subsubsection{Opis}
 Funkcja ta zawiera dwie części - modelową i symulacyjną.\\
+Początkowo zleca wyliczenie punktu optymalnego, a następnie zleca wyliczanie optymalnego sterowania.\\
+W końcu uruchamia symulację i wyswietla wykres zbieznosci stanow do punktu stacjonarnego
 
+\subsection{fun1}
+Funkcja ta dla zadanych macierzy stanów i sterowań wyodrębnia aktualnie potrzebne i uruchamia obliczanie wskaźnika jakosci dla tych danych.
 
+\subsection{Model liniowy}
+Funkcja model lin służy znalezieniu początkowego punktu optymalnego - wykorzystywana w funkcji fmincon.
+
+\subsection{Nowy model liniowy}
+Funkcja model lin nowy ta służy budowie własciwego modelu, wykorzystywanego przy obliczaniu optymalnej strategii decyzyjnej.
+
+\subsection{Sterowanie optymalne}
+Funkcja ster opt ta wyznacza optymalne sterowanie dla zadanych danych.
+
+\subsection{Stany}
+Funkcja transf ta służy wyznaczaniu wartosci kolejnych stanów.
+\subsection{wskjak}
+Funkcja ta oblicza wartosć wskaźnika jakosci dla zadanych argumentów.
 
 \section{Podsumowanie}
 Otrzymane wyniki przypominają wyniki z doświadczeń z SP - z niewielkimi rozbieżnościami, wynikającymi głównie z przyjętej dyskretyzacji.
