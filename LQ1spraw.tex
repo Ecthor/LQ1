@@ -68,50 +68,16 @@ g(z)=
 \end{displaymath}
 
 \section{Założenia projektowe}
-Wartości wskaźników jakości dla stanów i etapów przetrzymywane są w macierzy Jk,
-Wartości sterowań dla stanów i etapów przetrzymywane są w macierzy Uk;
-Wartości zakłóceń, wraz z odpowiadającym im rozkładem prawdopodobieństwa, został przedstawiony w macierzy PW.
-
-\subsection{Dyskretyzacja}
-Przyjęliśmy następujące dyskretyzacje dla poszczególnych wartości:
-Sterowania: 15 wartości, d = 300;
-Stanu: 20 wartości, d = 400;
-Zakłóceń: 7 wartości, 0.02 - 0.05, d = 0.005;
-
-\section{Zakłócenia losowe}
-Zakłócenia losowe potrzebne do symulacji generowane są przez funkcję wrand.m.\\
-\begin{verbatim}
-function [w] = wrand()
-    i = rand;
-    if i<0.05
-        w = 0.02;
-    elseif i<0.15
-        w = 0.025;
-    elseif i<0.35
-        w = 0.03;
-    elseif i<0.65
-        w = 0.035;
-    elseif i<0.85
-        w = 0.04;
-    elseif i<0.95
-        w = 0.045;
-    else
-        w = 0.05;
-    end
-end
-\end{verbatim}
+Początkowo wyznaczamy punkt optymalny zadania liniowego za pomocą funkcji fmincon Matlaba. Następnie dokonujemy obliczenia sterowań i stanów dla nowego modelu liniowego i uruchamiamy symulację, mającą na celu sprawdzenie poprawnosci (zbieżnosci do punktu stacjonarnego) rozwiązania zadania.
 
 \section{Funkcja główna}
-Wszystkie główne zadania realizuje funkcja pd1.m
+Wszystkie główne zadania realizuje funkcja lq1.m
 \subsection{Funkcja w matlabie}
 Z uwagi na długość funkcji, została ona załączona w oddzielnym pliku.
 
 \subsection{Opis}
 Funkcja ta zawiera dwie części - modelową i symulacyjną.\\
-Pierwsza uruchamia algorytm programowania dynamicznego. Uzupełnia początkowe wartości macierzy i uruchamia 4 zagnieżdżone w sobie pętle, wykonujące obliczenia wskaźników jakości dla wszystkich możliwych kombinacji etapów, stanów, sterowań i zakłóceń.\\
-Druga uruchamia symulację - dla zadanej ilości obiegów i losowanych wartości zakłóceń z dyskretyzowanego przedziału.
-Następnie oblicza średnią wartość wskaźnika jakości dla badanych przypadków, następnie oblicza odchylenie i wartość oczekiwaną wskaźnika jakości.
-Ostatecznie, zgromadzone dane wyświetla na wykresach.\\
+
 
 
 \section{Podsumowanie}
