@@ -99,17 +99,19 @@ Funkcja transf ta służy wyznaczaniu wartosci kolejnych stanów.
 Funkcja ta oblicza wartosć wskaźnika jakosci dla zadanych argumentów.
 
 \section{Podsumowanie}
-Otrzymane wyniki przypominają wyniki z doświadczeń z SP - z niewielkimi rozbieżnościami, wynikającymi głównie z przyjętej dyskretyzacji.
-Przy współczynnikach A i B porównywalnych (A<B*$10^6$)Student powinien raczej przetrzymać pieniądze (satysfakcja rośnie kwadratowo) i wydać je na końcu rozpatrywanego horyzontu, podnosząc jakość. Dopiero po znacznym zwiększeniu A w stosunku do B obserwujemy, że sterowanie ulega zróżnicowaniu.
-\subsection{Otrzymane wyniki:}
+Dla zadanych danych punkt optymalny odnaleziony przez funkcję fmincon to:
 \begin{verbatim}
-Średnia jakość:
-  2.3461e+010
-
-Odchylenie
-  420.8904
-
-Wartosc oczekiwana:
-  4.5040e+009
+x1=-5.5489;
+x2=-0.1905; 
+Przy sterowaniu 
+u=3.9121;
 \end{verbatim}
+W przypadku, gdy zakłócenia są zerowe, po uruchomieniu symulacji sterowanie pozostaje w punkcie początkowym - optymalnym, dzięki czemu sprawdzilismy poprawne działanie strategii decyzyjnej.
+\subsection{Otrzymane wyniki sprawdzające poprawnosć działania:}
+Po uruchomieniu symulacji wyniki prezentowały następujące stany i sterowania:
+\begin{verbatim}
+TODO: DODAĆ TO CO WYPL?UJE MATLAB
+\end{verbatim}
+\subsection{Wykres zbieżnosci stanów:}
+TODO: DODAĆ OBRAZEK
 \end{document}
